@@ -1,5 +1,5 @@
 // server.js
-
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -12,7 +12,7 @@ app.use(cors())
 app.use(bodyParser.json());
 
 // MongoDB Connection
-mongoose.connect('mongodb://localhost:27017/blogDB').then(()=>{
+mongoose.connect(process.env.MONGO_URI).then(()=>{
     console.log("Connection Successfull")
 })
 
@@ -78,4 +78,6 @@ app.post('/api/blogs', async (req, res) => {
 });
 
 // Start server
-app.listen(5000, () => console.log('Server running on port 5000'));
+app.listen(process.env.PORT, () => {
+    console.log(`Server running on port ${process.env.PORT}`);
+});
